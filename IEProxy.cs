@@ -26,6 +26,10 @@ namespace WebBrowserIEProxyAPP
         [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
         private static extern int UrlMkSetSessionOption(int dwOption, string pBuffer, int dwBufferLength, int dwReserved);
 
+
+        [DllImport("wininet.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool InternetSetCookie(string lpszUrlName, string lbszCookieName, string lpszCookieData);
+
         public struct Struct_INTERNET_PROXY_INFO
         {
             public int dwAccessType;

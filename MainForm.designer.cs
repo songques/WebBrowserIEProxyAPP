@@ -45,6 +45,7 @@
             this.txt_Proxy = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_xml_rpc = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -227,20 +228,30 @@
             // 
             // btn_xml_rpc
             // 
-            this.btn_xml_rpc.Location = new System.Drawing.Point(94, 451);
+            this.btn_xml_rpc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btn_xml_rpc.Location = new System.Drawing.Point(22, 447);
             this.btn_xml_rpc.Name = "btn_xml_rpc";
-            this.btn_xml_rpc.Size = new System.Drawing.Size(75, 23);
+            this.btn_xml_rpc.Size = new System.Drawing.Size(137, 23);
             this.btn_xml_rpc.TabIndex = 12;
-            this.btn_xml_rpc.Text = "xml_rpc";
+            this.btn_xml_rpc.Text = "xml_rpc[user.login]";
             this.btn_xml_rpc.UseVisualStyleBackColor = true;
             this.btn_xml_rpc.Click += new System.EventHandler(this.btn_xml_rpc_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button1.Location = new System.Drawing.Point(165, 447);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(266, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "xml_rpc[blackhat_3rd_party.getProxyListA]";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 502);
-            this.Controls.Add(this.btn_xml_rpc);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_Foxfire);
@@ -250,6 +261,8 @@
             this.Controls.Add(this.btn_localBrowser);
             this.Controls.Add(this.btn_ListenHTML);
             this.Controls.Add(this.webBrower1);
+            this.Controls.Add(this.btn_xml_rpc);
+            this.Controls.Add(this.button1);
             this.Name = "MainForm";
             this.Text = "代理---User-Agent模拟";
             this.groupBox1.ResumeLayout(false);
@@ -279,6 +292,7 @@
         private System.Windows.Forms.TextBox txt_Proxy;
         private System.Windows.Forms.TextBox txt_ProxyPort;
         private System.Windows.Forms.Button btn_xml_rpc;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using CookComputing.XmlRpc;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,7 +15,9 @@ namespace WebBrowserIEProxyAPP
         IEProxy p = null;
         SHDocVw.WebBrowser wb;
         //string url = @"http://whatsmyuseragent.net/";
-        string url = "http://www.ip138.com/";
+        //string url = "http://www.ip138.com/";
+        string url = "http://www.ipreferrer.com/";
+        string referer = @"Referer: http://www.baidu.com/s?wd=http%3A%2F%2Fwww.ipreferrer.com%2F&rsv_bp=0&ch=&tn=baidu&bar=&rsv_spt=3&ie=utf-8&rsv_n=2&rsv_sug3=1&rsv_sug1=1&rsv_sug4=38&inputT=1229";
         private IMath mathProxy;
 
         [STAThread]
@@ -50,13 +53,14 @@ namespace WebBrowserIEProxyAPP
 
         private void btn_ListenHTML_Click(object sender, EventArgs e)
         {
-            p = new IEProxy(txt_Proxy+":"+txt_ProxyPort);
+            p = new IEProxy(txt_Proxy.Text+":"+txt_ProxyPort.Text);
 
             wb = (SHDocVw.WebBrowser)webBrower1.ActiveXInstance;
             wb.BeforeNavigate2 += new SHDocVw.DWebBrowserEvents2_BeforeNavigate2EventHandler(WebBrowser_BeforeNavigate2);
 
             HtmlDocument htmlDoc = webBrower1.Document;
             htmlDoc.MouseOver += new HtmlElementEventHandler(HtmlDocument1_MouseOver);
+            webBrower1.ScriptErrorsSuppressed = true;
 
             btn_localBrowser.Enabled = true;
             btn_ProxyBrowser.Enabled = true;
@@ -89,7 +93,7 @@ namespace WebBrowserIEProxyAPP
 
             //webBrowser1.Navigate(url, "_self", null, user_agent + "\n" + accept + "\n" + accept_language + "\n" + dnt);
             p.ChangeUserAgent(user_agent + "\n" + accept + "\n" + accept_language + "\n" + dnt);
-            webBrower1.Navigate(url);
+            webBrower1.Navigate(url,null,null,referer);
         }
 
         private void btn_Chrome_Click(object sender, EventArgs e)
@@ -100,7 +104,7 @@ namespace WebBrowserIEProxyAPP
             string accept_charset = "Accept-Charset: GBK,utf-8;q=0.7,*;q=0.3";
             //webBrowser1.Navigate(url, "_self", null, user_agent + "\n" + accept + "\n" + accept_language + "\n" + accept_charset);
             p.ChangeUserAgent(user_agent + "\n" + accept + "\n" + accept_language + "\n" + accept_charset);
-            webBrower1.Navigate(url);
+            webBrower1.Navigate(url, null, null, referer);
         }
 
         private void btn_Foxfire_Click(object sender, EventArgs e)
@@ -110,7 +114,7 @@ namespace WebBrowserIEProxyAPP
             string accept_language = "Accept-Language: zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3";
             //webBrowser1.Navigate(url, "_self", null, user_agent + "\n" + accept + "\n" + accept_language);
             p.ChangeUserAgent(user_agent + "\n" + accept + "\n" + accept_language);
-            webBrower1.Navigate(url);
+            webBrower1.Navigate(url, null, null, referer);
         }
 
         private void btn_gotos_Click(object sender, EventArgs e)
@@ -125,8 +129,16 @@ namespace WebBrowserIEProxyAPP
 
             try
             {
-                object result = mathProxy.login("songques", "songwen");
-                Console.WriteLine("result:" + result.ToString());
+                object result = mathProxy.login("kelgood", "kelgood2");
+
+                Hashtable table = result as Hashtable;
+                Console.WriteLine("session_name:" + table["session_name"].ToString());
+                Console.WriteLine("sessid:" + table["sessid"].ToString());
+                IEProxy.InternetSetCookie(xmp_rpc_rul, "session_name", table["session_name"].ToString());
+                IEProxy.InternetSetCookie(xmp_rpc_rul, "sessid", table["sessid"].ToString());
+
+
+                
             }
             catch (Exception ex)
             {
@@ -139,6 +151,14 @@ namespace WebBrowserIEProxyAPP
         {
             [XmlRpcMethod("user.login")]
             object login(string username, string password);
+
+            [XmlRpcMethod("blackhat_3rd_party.getProxyListA")]
+            object getProxyListA(
+                string useragent,
+                string country,
+                string region,
+                int limit,
+                int page);
         }
     }
 }
